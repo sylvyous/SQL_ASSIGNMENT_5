@@ -49,7 +49,8 @@ CREATE INDEX idx_temp_film_inventory_title ON temp_film_inventory(title);
 SELECT * FROM 	temp_film_inventory
 --Populate the film_inventory table with data from the DVD rental database, considering both rentals and returns.	
 
-WITH TEMP_FILM_INVENTORYK AS
+DROP TABLE IF EXISTS temp_film_inventory;
+CREATE TEMPORARY TABLE temp_film_inventory AS
 (
 	SELECT 	se_film_inventory.title,
 		    se_film_inventory.inventory_count,
@@ -64,6 +65,8 @@ WITH TEMP_FILM_INVENTORYK AS
 		ON se_inventory.inventory_id = se_rental.inventory_id 
 	
 )
+CREATE INDEX idx_temp_film_inventory_title ON temp_film_inventory(title)
+SELECT * FROM 	temp_film_inventory
 
 --Retrieve the film title with the lowest available inventory count from the film_inventory table.
 
